@@ -20,15 +20,20 @@
   font-family:Inter,system-ui,sans-serif;
 }
 
+html{
+  scroll-behavior:smooth;
+}
+
 body{
   background:
     radial-gradient(circle at 60% 30%, rgba(120,140,255,.25), transparent 55%),
-    radial-gradient(circle at 30% 70%, rgba(255,180,120,.15), transparent 60%),
+    radial-gradient(circle at 30% 70%, rgba(255,180,120,.12), transparent 60%),
+    radial-gradient(circle at 80% 80%, rgba(170,120,255,.18), transparent 60%),
     var(--bg);
   color:var(--text);
   line-height:1.6;
-  position:relative;
   overflow-x:hidden;
+  position:relative;
 }
 
 /* VIGNETTE */
@@ -38,12 +43,13 @@ body::after{
   inset:0;
   pointer-events:none;
   z-index:2;
-  background:radial-gradient(
-    ellipse at center,
-    rgba(0,0,0,0) 45%,
-    rgba(0,0,0,.5) 75%,
-    rgba(0,0,0,.85) 100%
-  );
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(0,0,0,0) 40%,
+      rgba(0,0,0,.55) 78%,
+      rgba(0,0,0,.88) 100%
+    );
 }
 
 /* PARTICLES */
@@ -54,27 +60,38 @@ body::after{
   pointer-events:none;
 }
 
-/* TOP BAR */
+/* TOPBAR */
 .topbar{
   position:fixed;
-  inset:20px 20px auto 20px;
+  top:20px;
+  left:20px;
+  right:20px;
   display:flex;
   justify-content:space-between;
-  z-index:10;
+  align-items:center;
+  z-index:20;
 }
 
 .brand{
+  font-size:1rem;
+  letter-spacing:2px;
   font-weight:600;
-  letter-spacing:1px;
   opacity:.9;
 }
 
 .music{
-  font-size:.85rem;
-  padding:8px 14px;
+  padding:9px 16px;
   border-radius:999px;
   background:rgba(255,255,255,.08);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.08);
   cursor:pointer;
+  transition:.3s ease;
+  font-size:.85rem;
+}
+
+.music:hover{
+  background:rgba(255,255,255,.15);
 }
 
 /* HERO */
@@ -86,51 +103,71 @@ body::after{
   justify-content:center;
   text-align:center;
   padding:2rem;
-  z-index:5;
   position:relative;
+  z-index:5;
 }
 
 .hero h1{
-  font-size:clamp(2.4rem,5vw,3.8rem);
-  font-weight:500;
-  max-width:820px;
+  font-size:clamp(3rem,8vw,6rem);
+  font-weight:700;
+  letter-spacing:4px;
+  background:linear-gradient(
+    90deg,
+    #ffffff,
+    #cfd4ff,
+    #a6b4ff
+  );
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
 .hero p{
   margin-top:1rem;
   color:var(--muted);
+  font-size:1.05rem;
 }
 
 .nav-btns{
   margin-top:2.5rem;
   display:flex;
   gap:1rem;
+  flex-wrap:wrap;
+  justify-content:center;
 }
 
 .nav-btns a{
-  padding:.6rem 1.4rem;
+  padding:.8rem 1.5rem;
   border-radius:999px;
-  background:rgba(255,255,255,.08);
   text-decoration:none;
-  color:var(--text);
-  transition:.3s;
+  color:white;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(12px);
+  transition:.35s ease;
 }
 
 .nav-btns a:hover{
-  background:var(--accent);
-  color:#000;
+  transform:translateY(-4px);
+  background:linear-gradient(
+    135deg,
+    rgba(125,140,255,.8),
+    rgba(170,120,255,.8)
+  );
+  box-shadow:
+    0 0 18px rgba(130,120,255,.4),
+    0 0 35px rgba(130,120,255,.18);
 }
 
-/* SECTIONS */
+/* SECTION */
 section{
-  max-width:1100px;
+  max-width:1200px;
   margin:auto;
-  padding:4.5rem 2rem;
-  opacity:0;
-  transform:translateY(40px);
-  transition:1s ease;
+  padding:5rem 2rem;
   position:relative;
   z-index:5;
+  opacity:0;
+  transform:translateY(50px);
+  transition:1s ease;
 }
 
 section.visible{
@@ -140,94 +177,161 @@ section.visible{
 
 .section-title{
   text-align:center;
-  font-size:2rem;
+  font-size:2.2rem;
+  margin-bottom:1rem;
 }
 
 .divider{
   width:120px;
   height:1px;
-  background:rgba(255,255,255,.2);
-  margin:1.8rem auto 3rem;
+  background:rgba(255,255,255,.18);
+  margin:0 auto 3rem;
 }
 
-/* NOVELS */
+/* NOVELS GRID */
 .novels{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
   gap:2rem;
 }
 
+/* CARD */
 .novel-card{
-  position: relative; /* ← THIS IS THE KEY FIX */
-  height:420px;
-  border-radius:18px;
+  position:relative;
+  height:480px;
+  border-radius:24px;
   overflow:hidden;
-  background-size:105%;
+  background-size:110%;
   background-position:center;
-  transition:transform .5s ease,background-size 1.2s ease;
-  box-shadow:0 25px 60px rgba(0,0,0,.65);
+  transition:
+    transform .5s ease,
+    background-size 1.2s ease;
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.65);
 }
 
-
 .novel-card:hover{
-  transform:translateY(-6px);
-  background-size:120%;
+  transform:translateY(-10px);
+  background-size:125%;
 }
 
 .novel-card::after{
   content:"";
   position:absolute;
   inset:0;
-  background:radial-gradient(circle,rgba(255,255,255,.12),transparent 65%);
+  background:
+    radial-gradient(circle at top, rgba(255,255,255,.14), transparent 60%);
   pointer-events:none;
 }
 
-.novel-card.afterme{background-image:url("a.png");}
-.novel-card.echobound{background-image:url("b.png");}
+.novel-card.afterme{
+  background-image:url("a.png");
+}
+
+.novel-card.echobound{
+  background-image:url("b.png");
+}
 
 /* OVERLAY */
 .overlay{
   position:absolute;
   inset:0;
-  background:linear-gradient(
-    to top,
-    rgba(0,0,0,.75) 25%,
-    rgba(0,0,0,.25) 60%,
-    rgba(0,0,0,.05)
-  );
-  padding:1.6rem;
+  padding:1.8rem;
   display:flex;
   flex-direction:column;
   justify-content:flex-end;
-  text-shadow:0 6px 20px rgba(0,0,0,.85);
+  background:
+    linear-gradient(
+      to top,
+      rgba(0,0,0,.82) 18%,
+      rgba(0,0,0,.38) 55%,
+      rgba(0,0,0,.05)
+    );
 }
 
-.overlay h3{font-size:1.6rem;}
+.overlay h3{
+  font-size:2rem;
+  margin-bottom:.6rem;
+}
+
 .overlay p{
-  font-size:.9rem;
-  color:#cfcfe5;
-  margin-top:.5rem;
+  color:#d6d6ea;
+  font-size:.95rem;
+  max-width:90%;
 }
 
-.links{margin-top:.8rem;}
+/* LINKS */
+.links{
+  margin-top:1.2rem;
+  display:flex;
+  flex-wrap:wrap;
+  gap:.7rem;
+}
+
 .links a{
-  margin-right:.6rem;
-  padding:.35rem 1rem;
-  border-radius:999px;
-  background:rgba(255,255,255,.15);
-  color:#fff;
   text-decoration:none;
-  font-size:.8rem;
+  color:white;
+  padding:.5rem 1.1rem;
+  border-radius:999px;
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.1);
+  backdrop-filter:blur(10px);
+  font-size:.82rem;
+  transition:.35s ease;
+}
+
+.links a:hover{
+  transform:translateY(-3px) scale(1.05);
+  background:linear-gradient(
+    135deg,
+    rgba(130,140,255,.8),
+    rgba(190,120,255,.8)
+  );
+  box-shadow:
+    0 0 18px rgba(140,120,255,.4),
+    0 0 30px rgba(100,120,255,.2);
+}
+
+/* MEDIA + SOCIALS */
+.info-box{
+  text-align:center;
+  color:var(--muted);
+  font-size:1rem;
+}
+
+.info-box a{
+  color:#d8dcff;
+  text-decoration:none;
+}
+
+.info-box a:hover{
+  text-decoration:underline;
 }
 
 /* FOOTER */
 footer{
   text-align:center;
   padding:3rem;
-  font-size:.85rem;
   color:var(--muted);
   position:relative;
   z-index:5;
+  font-size:.9rem;
+}
+
+/* MOBILE */
+@media(max-width:700px){
+
+  .hero h1{
+    font-size:3.4rem;
+  }
+
+  .overlay h3{
+    font-size:1.7rem;
+  }
+
+  .novel-card{
+    height:440px;
+  }
 }
 </style>
 </head>
@@ -245,7 +349,11 @@ footer{
 
 <div class="hero">
   <h1 id="type"></h1>
-  <p>Writer • Editor • Graphic Designer</p>
+
+  <p>
+    Writer • Editor • Graphic Designer
+  </p>
+
   <div class="nav-btns">
     <a href="#novels">Novels</a>
     <a href="#media">Media</a>
@@ -254,86 +362,222 @@ footer{
 </div>
 
 <section id="novels">
+
   <h2 class="section-title">Novels</h2>
   <div class="divider"></div>
 
   <div class="novels">
+
+    <!-- AFTERME -->
     <div class="novel-card afterme">
       <div class="overlay">
+
         <h3>AfterMe</h3>
-        <p>A quiet exploration of identity and what lingers after loss.</p>
+
+        <p>
+          A quiet exploration of identity and what lingers after loss.
+        </p>
+
         <div class="links">
-          <a href="https://tapas.io/series/AfterMe">Tapas</a>
-          <a href="http://wbnv.in/a/e1jYUsZ">Webnovel</a>
+          <a href="https://tapas.io/series/AfterMe" target="_blank">
+            Tapas
+          </a>
+
+          <a href="http://wbnv.in/a/e1jYUsZ" target="_blank">
+            WebNovel
+          </a>
         </div>
+
       </div>
     </div>
 
+    <!-- ECHOBOUND -->
     <div class="novel-card echobound">
       <div class="overlay">
+
         <h3>EchoBound</h3>
-        <p>Silence wasn’t weakness. It was restraint.</p>
+
+        <p>
+          Silence wasn’t weakness. It was restraint.
+        </p>
+
         <div class="links">
-          <a href="https://tapas.io/series/EchoBound">Tapas</a>
-          <a href="https://www.webnovel.com/book/35317934308087105">Webnovel</a>
+
+          <a href="https://tapas.io/series/EchoBound" target="_blank">
+            Tapas
+          </a>
+
+          <a href="https://www.webnovel.com/book/35317934308087105" target="_blank">
+            WebNovel
+          </a>
+
+          <a href="https://www.wattpad.com/story/408505138-echobound" target="_blank">
+            Wattpad
+          </a>
+
+          <a href="https://www.royalroad.com/fiction/155827/echobound" target="_blank">
+            RoyalRoad
+          </a>
+
+          <a href="https://www.scribblehub.com/series/2213546/echobound/" target="_blank">
+            ScribbleHub
+          </a>
+
         </div>
+
       </div>
     </div>
+
   </div>
 </section>
 
 <section id="media">
+
   <h2 class="section-title">Media</h2>
   <div class="divider"></div>
-  <p style="text-align:center;color:var(--muted)">
-    Check out my Youtube channels for media!
-  </p>
+
+  <div class="info-box">
+    Check out my YouTube channels for media content.
+  </div>
+
 </section>
 
 <section id="socials">
+
   <h2 class="section-title">Socials</h2>
   <div class="divider"></div>
-  <p style="text-align:center;color:var(--muted)">
-    <a href="https://x.com/787Kick">Twitter</a> •
-    <a href="https://youtube.com/@787kick">YouTube</a> •
-    <a href="https://youtube.com/@yo_kick">YouTube (Alt)</a>
-  </p>
+
+  <div class="info-box">
+    <a href="https://x.com/787Kick" target="_blank">Twitter</a>
+    •
+    <a href="https://youtube.com/@787kick" target="_blank">YouTube</a>
+    •
+    <a href="https://youtube.com/@yo_kick" target="_blank">
+      YouTube (Alt)
+    </a>
+  </div>
+
 </section>
 
-<footer>© 2026 — kick787</footer>
+<footer>
+  © 2026 — kick787
+</footer>
 
 <script>
-/* TYPEWRITER */
-const text="KICK787";
-let i=0,el=document.getElementById("type");
-(function t(){if(i<text.length){el.innerHTML+=text[i++];setTimeout(t,45);}})();
 
-/* SCROLL */
-const obs=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add("visible")),{threshold:.15});
-document.querySelectorAll("section").forEach(s=>obs.observe(s));
+/* TYPEWRITER */
+const text = "KICK787";
+let i = 0;
+const el = document.getElementById("type");
+
+(function type(){
+  if(i < text.length){
+    el.innerHTML += text[i];
+    i++;
+    setTimeout(type, 60);
+  }
+})();
+
+/* SCROLL REVEAL */
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("visible");
+    }
+  });
+},{threshold:.15});
+
+document.querySelectorAll("section")
+.forEach(section=>observer.observe(section));
 
 /* MUSIC */
-const audio=document.getElementById("ambient"),btn=document.getElementById("musicBtn");
-let play=false;
-btn.onclick=()=>{if(!play){audio.volume=0;audio.play();let v=0;const f=setInterval(()=>{if(v<.5){v+=.02;audio.volume=v}else clearInterval(f)},50);btn.textContent="♪ Ambient: ON"}else{audio.pause();btn.textContent="♪ Ambient: OFF"}play=!play};
+const audio = document.getElementById("ambient");
+const btn = document.getElementById("musicBtn");
 
-/* PARTICLES (SLOW + COLOR SHIFT) */
-const c=document.getElementById("particles"),ctx=c.getContext("2d");
-let w,h;function r(){w=c.width=innerWidth;h=c.height=innerHeight}addEventListener("resize",r);r();
-const p=[...Array(70)].map(()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.6+.4,v:(Math.random()*.15+.05),h:Math.random()*360}));
-function a(){
+let playing = false;
+
+btn.onclick = ()=>{
+
+  if(!playing){
+
+    audio.volume = 0;
+    audio.play();
+
+    let v = 0;
+
+    const fade = setInterval(()=>{
+
+      if(v < .5){
+        v += .02;
+        audio.volume = v;
+      }else{
+        clearInterval(fade);
+      }
+
+    },50);
+
+    btn.textContent = "♪ Ambient: ON";
+
+  }else{
+
+    audio.pause();
+    btn.textContent = "♪ Ambient: OFF";
+
+  }
+
+  playing = !playing;
+};
+
+/* PARTICLES */
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+let w,h;
+
+function resize(){
+  w = canvas.width = innerWidth;
+  h = canvas.height = innerHeight;
+}
+
+addEventListener("resize",resize);
+resize();
+
+const particles = [...Array(90)].map(()=>({
+  x:Math.random()*w,
+  y:Math.random()*h,
+  r:Math.random()*1.8 + .5,
+  v:Math.random()*.18 + .04,
+  hue:Math.random()*360
+}));
+
+function animate(){
+
   ctx.clearRect(0,0,w,h);
-  p.forEach(o=>{
-    o.y-=o.v;o.h+=.2;
-    if(o.y<0)o.y=h;
-    ctx.fillStyle=`hsla(${o.h},70%,70%,.35)`;
-    ctx.beginPath();ctx.arc(o.x,o.y,o.r,0,Math.PI*2);ctx.fill();
+
+  particles.forEach(p=>{
+
+    p.y -= p.v;
+    p.hue += .25;
+
+    if(p.y < 0){
+      p.y = h;
+      p.x = Math.random()*w;
+    }
+
+    ctx.fillStyle = `hsla(${p.hue},70%,70%,.35)`;
+
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+
   });
-  requestAnimationFrame(a);
-}a();
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+
 </script>
 
 </body>
 </html>
-
-
